@@ -66,9 +66,9 @@ RUN apt install -y nodejs
 RUN echo "[user]\ndefault=$username" >> /etc/wsl.conf
 
 # add exorts to user profile
-RUN echo "export PATH=$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
-RUN echo "export PATH=$PATH:/home/$username/.cargo/bin" >> /home/$username/.zshrc
-RUN echo "export PATH=$PATH:/home/$username/.azure/bin" >> /home/$username/.zshrc
+RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
+RUN echo "export PATH=\$PATH:/home/$username/.cargo/bin" >> /home/$username/.zshrc
+RUN echo "export PATH=\$PATH:/home/$username/.azure/bin" >> /home/$username/.zshrc
 
 # Clean up
 RUN apt autoremove -y ; apt clean -y ; rm -rf /var/lib/apt/lists/*
