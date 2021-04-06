@@ -15,18 +15,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag wslimage:0.1.${{ github.RUN_NUMBER }}
+      run: docker build . --file Dockerfile --tag temp/wslimage:0.1.${{ github.RUN_NUMBER }}
     - name: Run image for export
-      run: docker run --name wslimage:0.1.${{ github.RUN_NUMBER }} wslimage:0.1.${{ github.RUN_NUMBER }}
+      run: docker run --name wslimage:0.1.${{ github.RUN_NUMBER }} temp/wslimage:0.1.${{ github.RUN_NUMBER }}
     - name: Export
-      run: docker export --output ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar wslimage:0.1.${{ github.RUN_NUMBER }}
+      run: docker export --output ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar temp/wslimage:0.1.${{ github.RUN_NUMBER }}
     - name: Create Release
       run: |
           gh release create v0.1.${{github.RUN_NUMBER}} \
-          --title "internalorderapi v0.1.${{github.RUN_NUMBER}}" \
+          --title "v0.1.${{github.RUN_NUMBER}}" \
           --notes "# Changes" \
           --repo "${{github.SERVER_URL}}/${{github.REPOSITORY}}"
-    - name: Add orders.yml to Release
+    - name: Add exported tar to Release
       run: |
           gh release upload v0.1.${{github.RUN_NUMBER}} \
           ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar \
