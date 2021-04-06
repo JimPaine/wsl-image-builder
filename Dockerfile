@@ -72,3 +72,4 @@ RUN echo "export PATH=$PATH:/home/$username/.azure/bin" >> /home/$username/.zshr
 
 # Clean up
 RUN apt autoremove -y ; apt clean -y ; rm -rf /var/lib/apt/lists/*
+RUN rm packages-microsoft-prod.deb -f
