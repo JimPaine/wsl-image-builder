@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Main
 
 on:
   push:
@@ -17,9 +17,9 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag temp/wslimage:0.1.${{ github.RUN_NUMBER }}
     - name: Run image for export
-      run: docker run --name wslimage:0.1.${{ github.RUN_NUMBER }} temp/wslimage:0.1.${{ github.RUN_NUMBER }}
+      run: docker run --name wslimage temp/wslimage:0.1.${{ github.RUN_NUMBER }}
     - name: Export
-      run: docker export --output ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar temp/wslimage:0.1.${{ github.RUN_NUMBER }}
+      run: docker export --output ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar wslimage
     - name: Create Release
       run: |
           gh release create v0.1.${{github.RUN_NUMBER}} \
