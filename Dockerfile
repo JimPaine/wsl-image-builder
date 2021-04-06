@@ -55,7 +55,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 # Install Golang
 RUN wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
 RUN rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.2.linux-amd64.tar.gz
-RUN export PATH=$PATH:/usr/local/go/bin
 RUN rm -f go1.16.2.linux-amd64.tar.gz
 
 # Install node
@@ -64,6 +63,9 @@ RUN apt install -y nodejs
 
 # Set default user
 RUN echo "[user]\ndefault=$username" >> /etc/wsl.conf
+
+# add exorts to user profile
+RUN echo "export PATH=$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
 
 # Clean up
 RUN apt autoremove -y ; apt clean -y ; rm -rf /var/lib/apt/lists/*
