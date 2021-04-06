@@ -1,6 +1,5 @@
 # WSL image builder
 
-
 ## Run in either PowerShell or an existing WSL image
 
 > if running in WSL ensure the output is located somewhere on /mnt/c/ such as `/mnt/c/users/user/image.tar`
@@ -18,3 +17,45 @@ docker export --output image.tar {name}
 ```
 wsl --import {name} {directory} image.tar
 ```
+
+# What's out the box
+
+## OS
+ - Ubuntu 20.04
+
+## Shells
+- bash
+- sh
+- zsh (with ohmyzsh)
+
+## Additional sudoers
+- user
+
+## Packages
+- wget
+- curl
+- git
+- vim
+- sed
+- ca-certificates
+- apt-transport-https
+- lsb-release
+- gnupg
+- software-properties-common
+- openssl
+- apt-utils
+- sudo
+
+## Dev tools
+- .NET 5
+- Azure cli
+- Bicep
+- kubectl
+- GH cli
+- Terraform
+- Rust
+- Golang
+- node
+
+## WSL Config
+- default user set to user
