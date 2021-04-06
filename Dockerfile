@@ -51,7 +51,7 @@ RUN apt update && apt -y install terraform
 
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN mv /root/.cargo /home/$username/.cargo
+RUN cp -r /root/.cargo /home/$username/.cargo
 RUN /home/$username/.cargo/bin/rustup install stable
 RUN /home/$username/.cargo/bin/rustup default stable
 
