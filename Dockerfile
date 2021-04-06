@@ -32,7 +32,7 @@ RUN apt update && apt install -y dotnet-sdk-5.0
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 # Bicep install
-RUN az bicep install && mv /root/.azure /home/$username/.azure -r
+RUN az bicep install && mv /root/.azure /home/$username/.azure
 
 # Install kubectl
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -51,7 +51,7 @@ RUN apt update && apt -y install terraform
 
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN mv /root/.cargo /home/$username/.cargo -r
+RUN mv /root/.cargo /home/$username/.cargo
 
 # Install Golang
 RUN wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
