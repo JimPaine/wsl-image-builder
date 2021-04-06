@@ -16,8 +16,8 @@ RUN apt -y install zsh
 
 # Add User
 ARG username="user"
-ARG password="ThisIsNotAPaswword!"
-RUN useradd -m -d /home/$username -p $(openssl passwd -1 $password) $username -s /usr/bin/zsh
+ARG password="password"
+RUN useradd -m -d /home/$username -p $(echo $password | openssl passwd -1 -stdin) $username -s /usr/bin/zsh
 RUN usermod -aG sudo $username
 
 # Install OhMyZsh
