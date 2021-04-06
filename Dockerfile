@@ -70,3 +70,6 @@ RUN apt install -y nodejs
 
 # Set default user
 RUN echo "[user]\ndefault=$username" >> /etc/wsl.conf
+
+# Clean up
+RUN apt -y autoremove
