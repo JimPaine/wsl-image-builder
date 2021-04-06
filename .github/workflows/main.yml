@@ -32,8 +32,3 @@ jobs:
           --title "v0.1.${{github.RUN_NUMBER}}" \
           --notes "# Changes" \
           --repo "${{github.SERVER_URL}}/${{github.REPOSITORY}}"
-    - name: Add exported tar to Release
-      run: |
-          gh release upload v0.1.${{github.RUN_NUMBER}} \
-          ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar \
-          --repo "${{github.SERVER_URL}}/${{github.REPOSITORY}}"
