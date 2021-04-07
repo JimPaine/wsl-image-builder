@@ -9,7 +9,7 @@ RUN apt -y install \
   wget curl git vim sed ca-certificates \
   apt-transport-https lsb-release gnupg \
   software-properties-common openssl \
-  apt-utils sudo
+  apt-utils sudo gcc
 
 # Install ZSH
 RUN apt -y install zsh
