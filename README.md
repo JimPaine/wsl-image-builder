@@ -45,6 +45,7 @@ wsl --import {name} {directory} image.tar
 - openssl
 - apt-utils
 - sudo
+- unzip
 
 ## Dev tools
 - .NET 5
