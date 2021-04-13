@@ -29,10 +29,10 @@ RUN dpkg -i packages-microsoft-prod.deb
 RUN apt update && apt install -y dotnet-sdk-5.0
 
 ## Install Azure Cli
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN runuser -l $username -c 'sh -c "$(curl -sL https://aka.ms/InstallAzureCLIDeb | bash)" "" --unattended'
 
 # Bicep install
-RUN az bicep install && mv /root/.azure /home/$username/.azure
+RUN az bicep install
 
 # Install kubectl
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
