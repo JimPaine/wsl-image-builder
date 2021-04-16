@@ -9,7 +9,7 @@ RUN apt -y install \
   wget curl git vim sed ca-certificates \
   apt-transport-https lsb-release gnupg \
   software-properties-common openssl \
-  apt-utils sudo gcc unzip
+  apt-utils sudo gcc unzip dnsutils ping
 
 # Install ZSH
 RUN apt -y install zsh
@@ -64,8 +64,12 @@ RUN rm -f go1.16.2.linux-amd64.tar.gz
 RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
 RUN apt install -y nodejs
 
+# Configure DNS
+RUN echo -e "\n[network]\generateResolvConf=false" >> /etc/wsl.conf
+RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
+
 # Set default user
-RUN echo "[user]\ndefault=$username" >> /etc/wsl.conf
+RUN echo -e "\n[user]\ndefault=$username" >> /etc/wsl.conf
 
 # add exorts to user profile
 RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
