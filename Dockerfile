@@ -9,7 +9,7 @@ RUN apt -y install \
   wget curl git vim sed ca-certificates \
   apt-transport-https lsb-release gnupg \
   software-properties-common openssl \
-  apt-utils sudo gcc unzip dnsutils ping
+  apt-utils sudo gcc unzip dnsutils
 
 # Install ZSH
 RUN apt -y install zsh
@@ -29,10 +29,13 @@ RUN dpkg -i packages-microsoft-prod.deb
 RUN apt update && apt install -y dotnet-sdk-5.0
 
 ## Install Azure Cli
-RUN runuser -l $username -c 'sh -c "$(curl -sL https://aka.ms/InstallAzureCLIDeb | bash)" "" --unattended'
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+RUN AZ_REPO=$(lsb_release -cs) && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
+RUN sudo apt update
+RUN runuser -l $username -c 'sh -c "$(apt install azure-cli)" "" --unattended'
 
 # Bicep install
-RUN az bicep install
+RUN runuser -l $username -c 'sh -c "$(az bicep install)" "" --unattended'
 
 # Install kubectl
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -50,10 +53,9 @@ RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(ls
 RUN apt update && apt -y install terraform
 
 # Install Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN cp -r /root/.cargo /home/$username/.cargo
-RUN runuser -l $username -c 'sh -c "$(/home/$username/.cargo/bin/rustup install stable)" "" --unattended'
-RUN runuser -l $username -c 'sh -c "$(/home/$username/.cargo/bin/rustup default stable)" "" --unattended'
+RUN runuser -l $username -c 'sh -c "$(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y)" "" --unattended'
+RUN runuser -l $username -c 'sh -c "$(rustup install stable)" "" --unattended'
+RUN runuser -l $username -c 'sh -c "$(rustup default stable)" "" --unattended'
 
 # Install Golang
 RUN wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
@@ -66,7 +68,7 @@ RUN apt install -y nodejs
 
 # Configure DNS
 RUN echo -e "\n[network]\generateResolvConf=false" >> /etc/wsl.conf
-RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
+CMD echo -e "nameserver 1.1.1.1" > /etc/resolv.conf
 
 # Set default user
 RUN echo -e "\n[user]\ndefault=$username" >> /etc/wsl.conf

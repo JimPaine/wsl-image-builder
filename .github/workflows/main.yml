@@ -14,19 +14,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: docker login
       run: echo ${{ github.TOKEN }} | docker login ghcr.io -u USERNAME --password-stdin
     - name: docker build
       run: docker build . --file Dockerfile --tag ghcr.io/jimpaine/wsl-image-builder:0.1.${{ github.RUN_NUMBER }}
+
     - name: docker push
+      if: ${{ github.event_name != 'pull_request' }}
       run: docker push ghcr.io/jimpaine/wsl-image-builder:0.1.${{ github.RUN_NUMBER }}
-    - name: Run image for export
-      run: docker run --name wslimage  ghcr.io/jimpaine/wsl-image-builder:0.1.${{ github.RUN_NUMBER }}
-    - name: Export
-      run: docker export --output ./wslimage:0.1.${{ github.RUN_NUMBER }}.tar wslimage
     - name: GH login
+      if: ${{ github.event_name != 'pull_request' }}
       run: gh auth login --with-token <<< "${{github.TOKEN}}"
     - name: Create Release
+      if: ${{ github.event_name != 'pull_request' }}
       run: |
           gh release create v0.1.${{github.RUN_NUMBER}} \
           --title "v0.1.${{github.RUN_NUMBER}}" \
