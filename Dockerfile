@@ -68,7 +68,7 @@ RUN apt install -y nodejs
 
 # Configure DNS
 RUN echo -e "\n[network]\generateResolvConf=false" >> /etc/wsl.conf
-RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
+CMD echo -e "nameserver 1.1.1.1" > /etc/resolv.conf
 
 # Set default user
 RUN echo -e "\n[user]\ndefault=$username" >> /etc/wsl.conf
