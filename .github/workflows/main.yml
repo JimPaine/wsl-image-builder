@@ -15,14 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build container image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v2
       with:
         username: USERNAME
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         repository: jimpaine/wsl-image-builder:0.1.${{ github.RUN_NUMBER }}
-        tag_with_sha: true
-        tag_with_ref: true
     - name: GH login
       run: gh auth login --with-token <<< "${{github.TOKEN}}"
     - name: Create Release
