@@ -9,7 +9,7 @@ RUN apt -y install \
   wget curl git vim sed ca-certificates \
   apt-transport-https lsb-release gnupg \
   software-properties-common openssl \
-  apt-utils sudo gcc unzip dnsutils ping
+  apt-utils sudo gcc unzip dnsutils
 
 # Install ZSH
 RUN apt -y install zsh
