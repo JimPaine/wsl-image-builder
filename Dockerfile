@@ -35,7 +35,7 @@ RUN sudo apt update
 RUN runuser -l $username -c 'sh -c "$(apt install azure-cli)" "" --unattended'
 
 # Bicep install
-RUN az bicep install
+RUN runuser -l $username -c 'sh -c "$(az bicep install)" "" --unattended'
 
 # Install kubectl
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
