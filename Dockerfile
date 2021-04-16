@@ -29,9 +29,10 @@ RUN dpkg -i packages-microsoft-prod.deb
 RUN apt update && apt install -y dotnet-sdk-5.0
 
 ## Install Azure Cli
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-RUN mv /root/.azure /home/$username/
-RUN chown -hR $username /home/$username/.azure
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+RUN AZ_REPO=$(lsb_release -cs) && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
+RUN sudo apt update
+RUN runuser -l $username -c 'sh -c "$(apt install azure-cli)" "" --unattended'
 
 # Bicep install
 RUN az bicep install
