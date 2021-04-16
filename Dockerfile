@@ -30,7 +30,7 @@ RUN apt update && apt install -y dotnet-sdk-5.0
 
 ## Install Azure Cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-RUN mv -r /root/.azure /home/$username/
+RUN mv /root/.azure /home/$username/
 RUN chown -hR $username /home/$username/.azure
 
 # Bicep install
