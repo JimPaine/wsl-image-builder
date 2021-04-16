@@ -55,8 +55,8 @@ RUN apt update && apt -y install terraform
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN cp -r /root/.cargo /home/$username/.cargo
-RUN runuser -l $username -c 'sh -c "$(/home/$username/.cargo/bin/rustup install stable)" "" --unattended'
-RUN runuser -l $username -c 'sh -c "$(/home/$username/.cargo/bin/rustup default stable)" "" --unattended'
+RUN runuser -l $username -c 'sh -c "$(~/.cargo/bin/rustup install stable)" "" --unattended'
+RUN runuser -l $username -c 'sh -c "$(~/.cargo/bin/rustup default stable)" "" --unattended'
 
 # Install Golang
 RUN wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
