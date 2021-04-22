@@ -64,7 +64,7 @@ RUN mv /root/.cargo /home/$username/
 RUN chown -R $username /home/$username/.cargo
 RUN export PATH=$PATH:/home/$username/.cargo/bin
 RUN echo $PATH
-RUN runuser -l $username -c 'sh -c "$(~/.cargo/bin/rustup install stable)" "" --unattended'
+# RUN runuser -l $username -c 'sh -c "$(~/.cargo/bin/rustup install stable)" "" --unattended'
 RUN runuser -l $username -c 'sh -c "$(~/.cargo/bin/rustup default stable)" "" --unattended'
 
 # Install Golang
