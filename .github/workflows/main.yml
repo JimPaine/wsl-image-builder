@@ -31,5 +31,5 @@ jobs:
       run: |
           gh release create v0.1.${{github.RUN_NUMBER}} \
           --title "v0.1.${{github.RUN_NUMBER}}" \
-          --notes "# Changes" \
+          --notes "# Install via PowerShell \n\n ```powershell\ndocker run --name jp-0.1.${{github.RUN_NUMBER}} ghcr.io/jimpaine/wsl-image-builder:0.1.${{github.RUN_NUMBER}} && \ \n docker export --output jp-0.1.${{github.RUN_NUMBER}}.tar jp-0.1.${{github.RUN_NUMBER}} && \ \n wsl --import jp-0.1.${{github.RUN_NUMBER}} c:\jp-0.1.${{github.RUN_NUMBER}} jp-0.1.${{github.RUN_NUMBER}}.tar \n ```" \
           --repo "${{github.SERVER_URL}}/${{github.REPOSITORY}}"
