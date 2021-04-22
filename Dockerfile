@@ -77,7 +77,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
 RUN apt install -y nodejs
 
 # Configure DNS
-RUN echo "\n[network]\ngenerateResolvConf=false" >> /etc/wsl.conf
+RUN echo "\n[network]\ngenerateResolvConf=true" >> /etc/wsl.conf
 CMD echo "nameserver 1.1.1.1" > /etc/resolv.conf
 
 # Set default user
