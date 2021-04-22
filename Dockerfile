@@ -32,7 +32,7 @@ RUN apt update && apt install -y dotnet-sdk-5.0
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
 RUN AZ_REPO=$(lsb_release -cs) && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
 RUN sudo apt update
-RUN runuser -l $username -c 'sh -c "$(apt install azure-cli)" "" --unattended'
+RUN apt install azure-cli
 
 # Bicep install
 RUN runuser -l $username -c 'sh -c "$(az bicep install)" "" --unattended'
@@ -53,7 +53,10 @@ RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(ls
 RUN apt update && apt -y install terraform
 
 # Install Rust
-RUN runuser -l $username -c 'sh -c "$(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y)" "" --unattended'
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN mv /root/.cargo /home/$username/
+RUN chown -R $username /home/$username/.cargo
+RUN export PATH=$PATH:/home/$username/.cargo/bin
 RUN runuser -l $username -c 'sh -c "$(rustup install stable)" "" --unattended'
 RUN runuser -l $username -c 'sh -c "$(rustup default stable)" "" --unattended'
 
@@ -77,6 +80,7 @@ RUN echo "\n[user]\ndefault=$username" >> /etc/wsl.conf
 RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
 RUN echo "export PATH=\$PATH:/home/$username/.cargo/bin" >> /home/$username/.zshrc
 RUN echo "export PATH=\$PATH:/home/$username/.azure/bin" >> /home/$username/.zshrc
+RUN echo "export PATH=\$PATH:/home/$username/.cargo/bin" >> /home/$username/.zshrc
 
 # Clean up
 RUN apt autoremove -y ; apt clean -y ; rm -rf /var/lib/apt/lists/*
