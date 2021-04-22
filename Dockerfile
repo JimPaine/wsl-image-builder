@@ -71,7 +71,7 @@ RUN echo "\n[network]\ngenerateResolvConf=false" >> /etc/wsl.conf
 CMD echo "nameserver 1.1.1.1" > /etc/resolv.conf
 
 # Set default user
-RUN echo -e "\n[user]\ndefault=$username" >> /etc/wsl.conf
+RUN echo "\n[user]\ndefault=$username" >> /etc/wsl.conf
 
 # add exorts to user profile
 RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
