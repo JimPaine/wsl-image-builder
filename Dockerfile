@@ -35,7 +35,12 @@ RUN sudo apt update
 RUN apt install azure-cli
 
 # Bicep install
-RUN runuser -l $username -c 'sh -c "$(az bicep install)" "" --unattended'
+RUN az bicep install
+
+# mv .azure
+RUN mv /root/.azure /home/$username/
+RUN chown -R $username /home/$username/.azure
+RUN export PATH=$PATH:/home/$username/.azure/bin
 
 # Install kubectl
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -81,6 +86,7 @@ RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> /home/$username/.zshrc
 RUN echo "export PATH=\$PATH:/home/$username/.cargo/bin" >> /home/$username/.zshrc
 RUN echo "export PATH=\$PATH:/home/$username/.azure/bin" >> /home/$username/.zshrc
 RUN echo "export PATH=\$PATH:/home/$username/.cargo/bin" >> /home/$username/.zshrc
+RUN echo "export PATH=\$PATH:/home/$username/.azure/bin" >> /home/$username/.zshrc
 
 # Clean up
 RUN apt autoremove -y ; apt clean -y ; rm -rf /var/lib/apt/lists/*
