@@ -63,6 +63,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN mv /root/.cargo /home/$username/
 RUN chown -R $username /home/$username/.cargo
 RUN export PATH=$PATH:/home/$username/.cargo/bin
+RUN echo $PATH
 RUN runuser -l $username -c 'sh -c "$(rustup install stable)" "" --unattended'
 RUN runuser -l $username -c 'sh -c "$(rustup default stable)" "" --unattended'
 
