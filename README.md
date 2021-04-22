@@ -46,6 +46,9 @@ wsl --import {name} {directory} image.tar
 - apt-utils
 - sudo
 - unzip
+- dnsutils (nslookup, dig ...)
+- iputils-ping
+- net-tools
 
 ## Dev tools
 - .NET 5
