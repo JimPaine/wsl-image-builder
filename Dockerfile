@@ -9,7 +9,8 @@ RUN apt -y install \
   wget curl git vim sed ca-certificates \
   apt-transport-https lsb-release gnupg \
   software-properties-common openssl \
-  apt-utils sudo gcc unzip dnsutils
+  apt-utils sudo gcc unzip dnsutils \
+  iputils-ping net-tools
 
 # Install ZSH
 RUN apt -y install zsh
@@ -61,9 +62,6 @@ RUN apt update && apt -y install terraform
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 RUN mv /root/.cargo /home/$username/
 RUN chown -R $username /home/$username/.cargo
-RUN export PATH=$PATH:/home/$username/.cargo/bin
-RUN runuser -l $username -c 'sh -c "$(rustup install stable)" "" --unattended'
-RUN runuser -l $username -c 'sh -c "$(rustup default stable)" "" --unattended'
 
 # Install Golang
 RUN wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
@@ -76,7 +74,6 @@ RUN apt install -y nodejs
 
 # Configure DNS
 RUN echo "\n[network]\ngenerateResolvConf=false" >> /etc/wsl.conf
-CMD echo "nameserver 1.1.1.1" > /etc/resolv.conf
 
 # Set default user
 RUN echo "\n[user]\ndefault=$username" >> /etc/wsl.conf
